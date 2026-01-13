@@ -1,0 +1,992 @@
+<style>
+    .uni-pres-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--primary-color-dark);
+        color: var(--primary-color-dark);
+        overflow-x: hidden;
+        padding: 20px 0;
+    }
+
+    .uni-pres-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 10px;
+        position: relative;
+    }
+
+    /* Accessibility Focus Ring */
+    .uni-pres-nav-btn:focus-visible,
+    .uni-pres-restart-btn:focus-visible,
+    .uni-pres-slide:focus-visible,
+    h3:focus-visible,
+    h4:focus-visible {
+        outline: 3px solid var(--alt-color-2);
+        outline-offset: 4px;
+    }
+
+    .uni-pres-slide {
+        background: var(--alt-color-3);
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        /*min-height: 400px;*/
+        /*set height in JS to prevent jumps*/
+        position: relative;
+        overflow: hidden;
+        /* Hidden by default, managed by JS */
+        display: none;
+        animation: uniPresFadeIn 0.5s ease-in-out;
+
+        /*overflow-y:scroll;*/
+    }
+
+    .uni-pres-slide[data-active="true"] {
+        display: block;
+    }
+
+    @keyframes uniPresFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .uni-pres-slide::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, var(--primary-color-light), var(--alt-color-1), var(--alt-color-2));
+    }
+
+    .uni-pres-content {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: var(--primary-color-dark);
+    }
+
+    .uni-pres-title {
+        font-size: 2em;
+        color: var(--primary-color-dark);
+        margin-bottom: 20px;
+        font-weight: 700;
+        border-bottom: 3px solid var(--primary-color-light);
+        padding-bottom: 10px;
+        line-height: 1.2;
+    }
+
+    .uni-pres-main-title {
+        border: none;
+        font-size: 2.8em;
+        margin-bottom: 10px;
+        color: var(--primary-color-dark);
+    }
+
+    .uni-pres-subtitle {
+        font-size: 1.4em;
+        color: var(--alt-color-1);
+        margin-bottom: 30px;
+        font-weight: 500;
+    }
+
+    .uni-pres-text-center {
+        text-align: center;
+    }
+
+    .uni-pres-text-highlight {
+        color: var(--alt-color-1);
+        font-weight: bold;
+    }
+
+    .uni-pres-content ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 10px 0;
+    }
+
+    .uni-pres-content ul li {
+        padding: 8px 0 8px 30px;
+        position: relative;
+    }
+
+    /* decorative bullets */
+    .uni-pres-content ul li::before {
+        content: '*';
+        color: var(--primary-color-light);
+        font-size: 1.2em;
+        position: absolute;
+        left: 0;
+        top: 8px;
+        line-height: 1;
+        speak: none; 
+    }
+
+    .uni-pres-flex-row {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 25px;
+    }
+
+    .uni-pres-flex-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .uni-pres-info-box-lrg {
+        background: var(--primary-color-lighter);
+        border-left: 5px solid var(--alt-color-1);
+        padding: 20px;
+        border-radius: 8px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .uni-pres-box-info {
+        background: var(--primary-color-lighter);
+        border-left: 5px solid var(--alt-color-1);
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 6px;
+    }
+
+    .uni-pres-box-highlight {
+        background: var(--alt-color-2);
+        padding: 20px;
+        border-radius: 12px;
+        margin: 15px 0;
+        border: 2px solid var(--alt-color-2);
+        color: var(--primary-color-dark);
+    }
+
+
+    .uni-pres-box-info h5,
+    .uni-pres-box-highlight h5,
+    .uni-pres-section-dark h5 {
+        color: var(--alt-color-1);
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.2em;
+        font-weight: 700;
+    }
+
+    .uni-pres-img-hero {
+        width: 220px;
+        height: 220px;
+        opacity: 1;
+        margin: 20px auto;
+        border-radius: 50%;
+        border: 4px solid var(--primary-color-light);
+        object-fit: cover;
+        display: block;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .uni-pres-img-icon-lg {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 20px auto;
+        display: block;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid var(--primary-color-light);
+    }
+
+    .uni-pres-img-center {
+        display: block;
+        margin: 20px auto;
+        border-radius: 12px;
+        max-width: 100%;
+        height: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .uni-pres-img-responsive {
+        border-radius: 12px;
+        max-width: 100%;
+        height: auto;
+        max-height: 250px;
+        object-fit: cover;
+        border: 1px solid var(--primary-color-lighter);
+    }
+
+    .uni-pres-h-std {
+        max-height: 220px;
+    }
+
+    .uni-pres-h-sm {
+        max-height: 160px;
+    }
+
+    .uni-pres-grid-simple {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 25px;
+    }
+
+    .uni-pres-grid-item {
+        flex: 1 1 160px;
+        max-width: 200px;
+        text-align: center;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #fafafa;
+        border-radius: 8px;
+        transition: transform 0.2s;
+    }
+
+    .uni-pres-grid-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .uni-pres-grid-img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid var(--primary-color-light);
+        margin-bottom: 10px;
+        display: block;
+        background: var(--alt-color-3);
+    }
+
+    .uni-pres-item-title {
+        font-weight: 700;
+        color: var(--primary-color-dark);
+        font-size: 1.1em;
+        margin-bottom: 2px;
+        line-height: 1.2;
+    }
+
+    .uni-pres-item-subtitle {
+        color: var(--alt-color-1);
+        font-style: italic;
+        font-size: 0.9em;
+    }
+
+    .uni-pres-grid-auto {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .uni-pres-flex-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .uni-pres-card {
+        background: linear-gradient(135deg, var(--primary-color-lighter) 0%, #E8F7FD 100%);
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        border: 2px solid var(--primary-color-light);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        flex: 1 1 180px;
+        max-width: 250px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .uni-pres-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 174, 239, 0.2);
+    }
+
+    .uni-pres-card-img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        border: 1px solid var(--primary-color-light);
+        background: var(--alt-color-3);
+    }
+
+    .uni-pres-card-title {
+        font-weight: 700;
+        color: var(--primary-color-dark);
+        font-size: 1.1em;
+        margin-bottom: 2px;
+    }
+
+    .uni-pres-card-subtitle {
+        color: var(--alt-color-1);
+        font-style: italic;
+        font-size: 0.95em;
+    }
+
+    .uni-pres-split-container {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+
+    .uni-pres-split-item {
+        flex: 1;
+        min-width: 280px;
+    }
+
+    .uni-pres-section-dark {
+        background: var(--alt-color-1);
+        color: var(--alt-color-3);
+        padding: 30px;
+        border-radius: 12px;
+        margin-top: 30px;
+        border: 2px solid var(--alt-color-2);
+    }
+
+    .uni-pres-section-dark h5 {
+        color: var(--alt-color-2);
+        margin-bottom: 15px;
+        font-size: 1.5em;
+        margin-top: 0;
+    }
+
+    .uni-pres-section-dark p {
+        color: var(--alt-color-3);
+    }
+
+    /* Utilities */
+    .uni-pres-mt-sm {
+        margin-top: 15px;
+    }
+
+    .uni-pres-mb-0 {
+        margin-bottom: 0;
+    }
+
+    .uni-pres-pt-20 {
+        padding-top: 20px;
+    }
+
+    /* Navigation Controls */
+    .uni-pres-nav-group {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .uni-pres-nav-btn {
+        background: var(--primary-color-light);
+        color: var(--alt-color-3);
+        border: none;
+        padding: 12px 24px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(0, 174, 239, 0.4);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .uni-pres-nav-btn:hover {
+        background: var(--alt-color-1);
+        transform: translateY(-2px);
+    }
+
+    .uni-pres-nav-btn:disabled {
+        background: #ccc;
+        box-shadow: none;
+        cursor: not-allowed;
+        transform: none;
+        opacity: 0.6;
+    }
+
+    .uni-pres-restart-btn {
+        background: var(--alt-color-2);
+        color: var(--primary-color-dark);
+        border: none;
+        padding: 12px 24px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 700;
+        box-shadow: 0 4px 10px rgba(247, 183, 61, 0.4);
+        transition: all 0.3s ease;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        margin-left: 10px;
+    }
+
+    .uni-pres-restart-btn:hover {
+        background: #e5a832;
+        transform: translateY(-2px);
+    }
+
+    .uni-pres-counter {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: var(--primary-color-dark);
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 768px) {
+        .uni-pres-slide {
+            padding: 20px;
+            min-height: auto;
+        }
+
+        .uni-pres-title {
+            font-size: 1.6em;
+        }
+
+        .uni-pres-flex-row {
+            flex-direction: column;
+        }
+
+        .uni-pres-grid-auto {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .uni-pres-grid-item {
+            flex: 1 1 40%;
+            /* 2 per row on mobile */
+        }
+
+        .uni-pres-card {
+            max-width: 100%;
+        }
+
+        .uni-pres-controls {
+            flex-direction: column-reverse;
+            gap: 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .uni-pres-grid-auto {
+            grid-template-columns: 1fr;
+        }
+
+        .uni-pres-grid-item {
+            flex: 1 1 100%;
+            /* 1 per row on very small screens */
+        }
+
+        .uni-pres-nav-btn {
+            padding: 10px 18px;
+            font-size: 0.9em;
+        }
+    }
+</style>
+
+<div class="uni-pres-container m_ca_aiWidget" id="uniPresWidget" aria-roledescription="carousel" role="region" aria-label="Cultural Awareness Presentation">
+    <div class="uni-pres-wrapper">
+        <div class="uni-pres-slide" data-slide="1" data-active="true" role="tabpanel" aria-label="Slide 1 of 17">
+            <div class="uni-pres-text-center uni-pres-pt-20">
+                <h3 class="uni-pres-title uni-pres-main-title" tabindex="-1">Cultural Awareness</h3>
+                <p class="uni-pres-subtitle">To Facilitate Communication Across Cultural Differences</p>
+                <img src="https://riosalado.coursearc.com/files/3017/6782/9512/AdobeStock_735285578.jpeg" alt="Diverse hands holding a globe together" class="uni-pres-img-hero">
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="2" data-active="false" role="tabpanel" aria-label="Slide 2 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Cultural remedies & beliefs in healthcare</h4>
+            <div class="uni-pres-content">
+                <div class="uni-pres-flex-row">
+                    <div class="uni-pres-flex-col">
+                        <div class="uni-pres-info-box-lrg">
+                            <ul>
+                                <li>Natural Medicine</li>
+                                <li>Alternative Medicine</li>
+                                <li>Traditional Remedies</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="uni-pres-flex-col">
+                        <div class="uni-pres-img-wrapper">
+                            <img src="https://riosalado.coursearc.com/files/5117/6782/9512/AdobeStock_259639280.jpeg" alt="Collection of bottles containing herbs and liquids" class="uni-pres-img-responsive">
+                        </div>
+                    </div>
+                </div>
+                <p>These practices are used instead of standard treatments and are not generally recognized by the medical community as standard or conventional medical approaches.</p>
+                <p class="uni-pres-mt-sm">Examples include: <strong class="uni-pres-text-highlight">Herbs, Homeopathy, Iridology, Reflexology, Acupuncture, and Sobados.</strong></p>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="3" data-active="false" role="tabpanel" aria-label="Slide 3 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Herbs (1 of 2)</h4>
+            <p class="uni-pres-content">Some common herbal remedies include teas with:</p>
+            <div class="uni-pres-grid-simple">
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/6217/6782/9511/AdobeStock_216228631.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Ajo</div>
+                    <div class="uni-pres-item-subtitle">(Garlic)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/6717/6782/9511/AdobeStock_1847135835.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Anis de estrella</div>
+                    <div class="uni-pres-item-subtitle">(Anise)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/3517/6782/9510/AdobeStock_51090846.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Azahares de naranjo</div>
+                    <div class="uni-pres-item-subtitle">(Orange blossoms)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/8317/6782/9510/AdobeStock_567850835.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Cabellos de elote</div>
+                    <div class="uni-pres-item-subtitle">(Corn silk hair)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/1117/6782/9509/AdobeStock_574620173.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Canela</div>
+                    <div class="uni-pres-item-subtitle">(Cinnamon)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/2017/6782/9509/AdobeStock_55631648.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Cebolla</div>
+                    <div class="uni-pres-item-subtitle">(Onion)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/2117/6782/9508/AdobeStock_579533708.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Epazote</div>
+                    <div class="uni-pres-item-subtitle">(Mexican tea / Stinkweed)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/1017/6782/9508/AdobeStock_133735955.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Eucalipto</div>
+                    <div class="uni-pres-item-subtitle">(Eucalyptus blossoms)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="4" data-active="false" role="tabpanel" aria-label="Slide 4 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Herbs (2 of 2)</h4>
+            <div class="uni-pres-grid-simple">
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/3517/6782/9507/AdobeStock_1786344369.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Jengibre</div>
+                    <div class="uni-pres-item-subtitle">(Ginger)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/1917/6782/9506/AdobeStock_33044045.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Gordolobo</div>
+                    <div class="uni-pres-item-subtitle">(Mullein)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/2417/6782/9506/AdobeStock_780668903.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Hojas de limón</div>
+                    <div class="uni-pres-item-subtitle">(Lemon leaves)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/4417/6782/9505/AdobeStock_190998191.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Manzanilla</div>
+                    <div class="uni-pres-item-subtitle">(Chamomile)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/7717/6782/9505/AdobeStock_328692900.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Ruda</div>
+                    <div class="uni-pres-item-subtitle">(Rue)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/9317/6782/9504/AdobeStock_561954521.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Sábila</div>
+                    <div class="uni-pres-item-subtitle">(Aloe vera)</div>
+                </div>
+                <div class="uni-pres-grid-item">
+                    <img src="https://riosalado.coursearc.com/files/9817/6782/8456/AdobeStock_1837384299.jpeg" alt="" role="presentation" class="uni-pres-grid-img">
+                    <div class="uni-pres-item-title">Yerba buena</div>
+                    <div class="uni-pres-item-subtitle">(Spearmint)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="5" data-active="false" role="tabpanel" aria-label="Slide 5 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Homeopathy</h4>
+            <img src="https://riosalado.coursearc.com/files/6517/6782/8455/AdobeStock_495835690.jpeg" alt="Bottles with homeopathic remedies" class="uni-pres-img-icon-lg">
+            <div class="uni-pres-content">
+                <p>Focuses on bringing the entire body back into homeostasis, or balance.</p>
+                <p>Homeopathic medicine uses very minute doses of medicine to stimulate the body's own defenses and the healing process. These doses are so small that in Western allopathic medicine they are often viewed as ineffective.</p>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="6" data-active="false" role="tabpanel" aria-label="Slide 6 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Iridology</h4>
+            <img src="https://riosalado.coursearc.com/files/9217/6782/8454/AdobeStock_587288359.jpeg" alt="Iris chart showing eye zones" class="uni-pres-img-icon-lg">
+            <div class="uni-pres-content">
+                <p>The study of changes in the eyes. It focuses on changes in the colored part of the eye (the iris).</p>
+                <p>It identifies tissue changes and degenerative signs in the body which are reflected in signs and discolorations in the eyes.</p>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="7" data-active="false" role="tabpanel" aria-label="Slide 7 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Reflexology</h4>
+            <img src="https://riosalado.coursearc.com/files/1417/6782/8454/AdobeStock_220988512.jpeg" alt="Therapist massaging a foot" class="uni-pres-img-icon-lg">
+            <div class="uni-pres-content">
+                <p>The science which deals with the thought that there are reflex areas in the feet and hands that correspond to all of the glands, organs and parts of the body.</p>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="8" data-active="false" role="tabpanel" aria-label="Slide 8 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Acupuncture</h4>
+            <img src="https://riosalado.coursearc.com/files/5917/6782/8453/AdobeStock_281352628.jpeg" alt="Acupuncture needles on skin" class="uni-pres-img-icon-lg">
+            <div class="uni-pres-content">
+                <p>The technique of inserting thin needles through the skin at specific points on the body to control pain and other symptoms.</p>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="9" data-active="false" role="tabpanel" aria-label="Slide 9 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Sobados</h4>
+            <img src="https://riosalado.coursearc.com/files/6317/6782/8453/AdobeStock_72075539.jpeg" alt="Deep tissue back massage" class="uni-pres-img-icon-lg">
+            <div class="uni-pres-content">
+                <p>Traditional massages are done by a <strong>sobador</strong>. These sobadores are people who have learned the therapy from their ancestors and who have a "good hand." </p>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="10" data-active="false" role="tabpanel" aria-label="Slide 10 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Other Remedies</h4>
+            <div class="uni-pres-flex-wrap">
+                <div class="uni-pres-card">
+                    <img src="https://riosalado.coursearc.com/files/7417/6782/8452/AdobeStock_466849547.jpeg" alt="" role="presentation" class="uni-pres-card-img">
+                    <div class="uni-pres-card-title">Manteca o Cebo</div>
+                    <div class="uni-pres-card-subtitle">(Lard)</div>
+                </div>
+                <div class="uni-pres-card">
+                    <img src="https://riosalado.coursearc.com/files/9817/6782/8452/AdobeStock_341449209_Editorial_Use_Only.jpeg" alt="" role="presentation" class="uni-pres-card-img">
+                    <div class="uni-pres-card-title">Alcanfor</div>
+                    <div class="uni-pres-card-subtitle">(Camphor w/ alcohol)</div>
+                </div>
+                <div class="uni-pres-card">
+                    <img src="https://riosalado.coursearc.com/files/2317/6782/8451/AdobeStock_538957272.jpeg" alt="" role="presentation" class="uni-pres-card-img">
+                    <div class="uni-pres-card-title">Miel</div>
+                    <div class="uni-pres-card-subtitle">(Honey)</div>
+                </div>
+                <div class="uni-pres-card">
+                    <img src="https://riosalado.coursearc.com/files/9717/6782/8450/AdobeStock_135930154.jpeg" alt="" role="presentation" class="uni-pres-card-img">
+                    <div class="uni-pres-card-title">Avena</div>
+                    <div class="uni-pres-card-subtitle">(Oatmeal)</div>
+                </div>
+                <div class="uni-pres-card">
+                    <img src="https://riosalado.coursearc.com/files/8917/6782/8450/AdobeStock_97171057.jpeg" alt="" role="presentation" class="uni-pres-card-img">
+                    <div class="uni-pres-card-title">Posos de café</div>
+                    <div class="uni-pres-card-subtitle">(Coffee grounds)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="11" data-active="false" role="tabpanel" aria-label="Slide 11 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Common Illnesses</h4>
+            <div class="uni-pres-grid-auto">
+                <div class="uni-pres-card">
+                    <img src="https://riosalado.coursearc.com/files/7617/6782/8449/AdobeStock_586313765.jpeg" alt="" role="presentation" class="uni-pres-card-img">
+                    <div class="uni-pres-card-title">Mal de Ojo</div>
+                    <div class="uni-pres-card-subtitle">(Evil Eye)</div>
+                </div>
+                <div class="uni-pres-card">
+                    <img src="https://riosalado.coursearc.com/files/2817/6782/8449/AdobeStock_237603119.jpeg" alt="" role="presentation" class="uni-pres-card-img">
+                    <div class="uni-pres-card-title">Empacho</div>
+                    <div class="uni-pres-card-subtitle">(Stomach Blockage)</div>
+                </div>
+                <div class="uni-pres-card">
+                    <img src="https://riosalado.coursearc.com/files/6617/6782/8448/AdobeStock_68178637.jpeg" alt="" role="presentation" class="uni-pres-card-img">
+                    <div class="uni-pres-card-title">Mollera Caída</div>
+                    <div class="uni-pres-card-subtitle">(Fallen Fontanelle)</div>
+                </div>
+                <div class="uni-pres-card">
+                    <img src="https://riosalado.coursearc.com/files/5917/6783/0494/AdobeStock_641761360.jpeg" alt="" role="presentation" class="uni-pres-card-img">
+                    <div class="uni-pres-card-title">Susto</div>
+                    <div class="uni-pres-card-subtitle">(Fright)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="12" data-active="false" role="tabpanel" aria-label="Slide 12 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Mal de Ojo (The Evil Eye)</h4>
+            <img src="https://riosalado.coursearc.com/files/3417/6782/8447/AdobeStock_1862962053.jpeg" alt="Red string protection bracelet" class="uni-pres-img-center uni-pres-h-std">
+            <div class="uni-pres-content">
+                <p>The belief that by staring or gazing at a person or another's property, harm can be projected.</p>
+                <div class="uni-pres-box-highlight">
+                    <p class="uni-pres-mb-0"><strong>Preventative Amulets:</strong> La mano negra, Ojo de venado, and Middle Eastern amulets. Most are worn with a red ribbon or cord.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="13" data-active="false" role="tabpanel" aria-label="Slide 13 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Empacho</h4>
+            <img src="https://riosalado.coursearc.com/files/8217/6782/8446/AdobeStock_422049863.jpeg" alt="Mother rubbing belly of crying baby" class="uni-pres-img-center uni-pres-h-std">
+            <div class="uni-pres-content">
+                <p>A folk illness where soft or difficult-to-digest food becomes lodged in the stomach. Common in infants.</p>
+                <div class="uni-pres-split-container">
+                    <div class="uni-pres-box-info uni-pres-split-item">
+                        <h5>Symptoms:</h5>
+                        <ul>
+                            <li>anorexia, stomachache</li>
+                            <li>vomiting, pain with diarrhea</li>
+                            <li>generalized abdominal fullness</li>
+                        </ul>
+                    </div>
+                    <div class="uni-pres-box-info uni-pres-split-item">
+                        <h5>Causes:</h5>
+                        <ul>
+                            <li>eating too much or spoiled food</li>
+                            <li>eating at wrong time of day</li>
+                            <li>changing formulas rapidly</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="14" data-active="false" role="tabpanel" aria-label="Slide 14 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Mollera caída (Fallen Fontanelle)</h4>
+            <img src="https://riosalado.coursearc.com/files/2817/6782/8445/AdobeStock_216869699.jpeg" alt="Infant with visible soft spot on head" class="uni-pres-img-center uni-pres-h-std">
+            <div class="uni-pres-content">
+                <p>The mollera is thought to sink in when an infant is pulled from the breast too quickly, leading to fussiness and diarrhea.</p>
+                <div class="uni-pres-box-highlight">
+                    <p class="uni-pres-mb-0"><strong>Folk remedies:</strong> Sucking on the fontanelle, pushing up on the soft palate, or hanging the child upside down while tapping their feet.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="15" data-active="false" role="tabpanel" aria-label="Slide 15 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Susto</h4>
+            <img src="https://riosalado.coursearc.com/files/3217/6782/8445/AdobeStock_491149892.jpeg" alt="Cleansing ritual with sage smoke" class="uni-pres-img-center uni-pres-h-std">
+            <div class="uni-pres-content">
+                <p>"Fright" caused by a scary event where the soul leaves the body. Symptoms: insomnia, nightmares, fevers.</p>
+                <div class="uni-pres-box-info">
+                    <h5>Rituals:</h5>
+                    <ul>
+                        <li>Applying holy water/oil to forehead.</li>
+                        <li>Passing an egg over the body in circular motions.</li>
+                        <li>Barrida - sweeping a bundle of herbs over the body.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="16" data-active="false" role="tabpanel" aria-label="Slide 16 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Health Maintenance Beliefs</h4>
+            <div class="uni-pres-content">
+                <ul>
+                    <li><strong>Protection:</strong> Wear proper clothing (socks, hats) to protect from the <em>sereno</em> of the night.</li>
+                    <li><strong>Temperature:</strong> Beware of sudden changes (e.g., don't shower after ironing).</li>
+                    <li><strong>Diet:</strong> Certain foods should not be mixed or eaten at night.</li>
+                    <li><strong>Hot & Cold Theory:</strong> Treat hot illnesses with cold remedies, and vice versa.</li>
+                </ul>
+                <img src="https://riosalado.coursearc.com/files/1417/6782/8444/AdobeStock_542669784.jpeg" alt="Cat wearing a knit hat and scarf" class="uni-pres-img-center uni-pres-h-sm">
+            </div>
+        </div>
+
+        <div class="uni-pres-slide" data-slide="17" data-active="false" role="tabpanel" aria-label="Slide 17 of 17" aria-hidden="true">
+            <h4 class="uni-pres-title" tabindex="-1">Reflection</h4>
+            <img src="https://riosalado.coursearc.com/files/2217/6782/8447/AdobeStock_514668902.jpeg" alt="Doctor consulting patient" class="uni-pres-img-center uni-pres-h-sm">
+            <div class="uni-pres-section-dark">
+                <h5>Think about these questions:</h5>
+                <p>1. How can we educate the health care provider in a dignified way to become more culturally competent?</p>
+                <p class="uni-pres-mb-0">2. How can we do our jobs professionally without being condescending towards beliefs we don't share?</p>
+            </div>
+        </div>
+
+        <div class="uni-pres-controls">
+            <div class="uni-pres-counter" id="uniPresCounter" aria-live="polite">Slide 1 / 17</div>
+            <div class="uni-pres-nav-group">
+                <button class="uni-pres-nav-btn" id="uniPresPrevBtn" onclick="changeUniPresSlide(-1)" aria-label="Previous Slide" aria-controls="uniPresWidget">◀ Prev</button>
+                <button class="uni-pres-nav-btn" id="uniPresNextBtn" onclick="changeUniPresSlide(1)" aria-label="Next Slide" aria-controls="uniPresWidget">Next ▶</button>
+                <button class="uni-pres-restart-btn" id="uniPresRestartBtn" onclick="resetUniPresSlide()" aria-label="Start Presentation Over">
+                    <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Start Over
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // This script assumes one widget per page.
+    const widget = document.getElementById('uniPresWidget');
+    // Select all slides immediately to count them
+    const uniPresSlides = document.querySelectorAll('.uni-pres-slide');
+    const uniPresTotalSlides = uniPresSlides.length;
+    let uniPresCurrentSlide = 1;
+
+    function updateUniPresSlideVisibility(focusHeader = false) {
+        // Loop through slides
+        uniPresSlides.forEach((slide, index) => {
+            const isCurrent = (index + 1 === uniPresCurrentSlide);
+
+            // Toggle Display
+            if (isCurrent) {
+                slide.setAttribute('data-active', 'true');
+                slide.setAttribute('aria-hidden', 'false');
+
+                // A11y: Move focus to the header of the new slide so SR starts reading content immediately
+                // preventing the user from getting lost.
+                if (focusHeader) {
+                    const header = slide.querySelector('h3, h4');
+                    if (header) {
+                        setTimeout(() => header.focus(), 100);
+                    }
+                }
+            } 
+            else {
+                slide.setAttribute('data-active', 'false');
+                slide.setAttribute('aria-hidden', 'true');
+            }
+        });
+
+
+        // Update Counter
+        document.getElementById('uniPresCounter').textContent = `Slide ${uniPresCurrentSlide} / ${uniPresTotalSlides}`;
+
+        // Get Buttons
+        const prevBtn = document.getElementById('uniPresPrevBtn');
+        const nextBtn = document.getElementById('uniPresNextBtn');
+        const restartBtn = document.getElementById('uniPresRestartBtn');
+
+        // Logic: Prev Button
+        prevBtn.disabled = uniPresCurrentSlide === 1;
+        prevBtn.style.opacity = uniPresCurrentSlide === 1 ? '0.5' : '1';
+
+        // Logic: Next Button
+        nextBtn.disabled = uniPresCurrentSlide === uniPresTotalSlides;
+        nextBtn.style.opacity = uniPresCurrentSlide === uniPresTotalSlides ? '0.5' : '1';
+
+        // Logic: Start Over Button
+        if (uniPresCurrentSlide === uniPresTotalSlides) {
+            restartBtn.style.display = 'inline-flex';
+        } else {
+            restartBtn.style.display = 'none';
+        }
+    }
+
+    function changeUniPresSlide(direction) {
+        uniPresCurrentSlide += direction;
+
+        if (uniPresCurrentSlide < 1) uniPresCurrentSlide = 1;
+        if (uniPresCurrentSlide > uniPresTotalSlides) uniPresCurrentSlide = uniPresTotalSlides;
+
+        // Pass 'true' to focus the header of the new slide
+        updateUniPresSlideVisibility(true);
+    }
+
+    function resetUniPresSlide() {
+        uniPresCurrentSlide = 1;
+        updateUniPresSlideVisibility(true);
+    }
+
+    // Keyboard navigation - Scoped to the widget to prevent global hijacking
+
+    widget.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            if(uniPresCurrentSlide < uniPresTotalSlides) {
+                changeUniPresSlide(1);
+            }
+        } else if (e.key === 'ArrowLeft') {
+            if(uniPresCurrentSlide > 1) {
+                changeUniPresSlide(-1);
+            }
+        }
+    });
+
+    // cg - Calculate max height of for each slide and set all slides to that height
+    let wrapper = widget.querySelector('.uni-pres-wrapper');
+    let maxSlideHeight;
+
+    function calculateMaxHeight() {
+        console.log('In calculateMaxHeight function...');
+
+        let tempDiv = document.createElement('div');
+        tempDiv.style.position = 'absolute';
+        tempDiv.style.left = '-9999px';
+        tempDiv.style.visibility = 'hidden';
+        tempDiv.setAttribute('aria-hidden', 'true');
+        const widgetClone = widget.cloneNode(true);
+        tempDiv.appendChild(widgetClone);
+        document.body.appendChild(tempDiv);
+
+        // get clone's wrapper
+        const widgetCloneWrapper = widgetClone.querySelector('.uni-pres-wrapper');
+
+        const windowHeight = window.innerHeight;
+
+        //adjust width
+        widgetCloneWrapper.style.width = wrapper.getBoundingClientRect().width + 'px';
+
+
+        //get clone slides
+        const widgetCloneSlides = widgetClone.querySelectorAll('.uni-pres-slide');
+
+        maxSlideHeight = 0;
+        widgetCloneSlides.forEach((slide, index) => {
+
+            slide.style.removeProperty('height'); // reset first
+            slide.style.display = 'block'; // ensure all slides are visible for measurement
+
+            const slideHeight = slide.offsetHeight;
+
+            if (slideHeight > maxSlideHeight) {
+                maxSlideHeight = slideHeight;
+            }
+
+            if(index === widgetCloneSlides.length -1) {
+                //after last slide calculation
+                // update ORIGINAL widget slide heights
+                uniPresSlides.forEach((slide, index) => {
+
+                    slide.style.removeProperty('height'); // reset first
+                    slide.style.height = maxSlideHeight + 'px';
+                    if(index === uniPresSlides.length -1) {
+
+
+                        //get and set new original wrapper height
+                        wrapper.style.removeProperty('height'); // reset first
+                        wrapper.style.height = wrapper.getBoundingClientRect().height + 'px';
+                    }
+                });
+            }
+        });
+
+
+        document.body.removeChild(tempDiv);
+    }
+
+    //using debounce to limit resize calculations
+    let resizeTimeout;
+    // on window resize, recalculate max heights
+    window.addEventListener('resize', () => {
+        console.log('Window resized, start timeOut...');
+        clearTimeout(resizeTimeout);
+
+        resizeTimeout = setTimeout(() => {
+            console.log('Resize finished????');
+            // Do your measurement/layout update here
+            calculateMaxHeight();
+        }, 350); // adjust delay as needed
+    });
+
+
+    // Initialize
+    updateUniPresSlideVisibility(false);
+    calculateMaxHeight();
+</script>
