@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<activityData>
+<headerLabel><![CDATA[L6 Panoramic Landmark Identification - Activity 2]]></headerLabel>
+<directionLabel><![CDATA[ Drag the landmarks to their respective locations on the panoramic radiograph. ]]></directionLabel>
+<!--<customAsset></customAsset>-->
+<customEndMsg><![CDATA[ <div>CONFIRMATION CODE: <span style="color:#ff0000; cursor:text;font-weight:bold;">53884</span></div> ]]></customEndMsg>
+
+<theDraggers>
+<dragger>
+<text>Anterior nasal spine</text>
+<target>t0</target>
+</dragger>
+
+<dragger>
+<text>Nasal septum</text>
+<target>t0</target>
+</dragger>
+
+
+<dragger>
+<text>Nasal cavity</text>
+<target>t1</target>
+</dragger>
+
+
+<dragger>
+<text>Orbit of the eye</text>
+<target>t2</target>
+</dragger>
+
+
+<dragger>
+<text>Submandibular fossa</text>
+<target>t3</target>
+</dragger>
+
+
+<dragger>
+<text>Mandibular canal</text>
+<target>t4</target>
+</dragger>
+
+
+<dragger>
+<text>Mandibular condyle</text>
+<target>t5</target>
+</dragger>
+
+
+<dragger>
+<text>Mandibular notch</text>
+<target>t6</target>
+</dragger>
+
+<dragger>
+<text>Articular eminence</text>
+<target>t7</target>
+</dragger>
+
+
+<dragger>
+<text>Zygomatic process </text>
+<target>t8</target>
+</dragger>
+
+<dragger>
+<text>Maxillary tuberosity</text>
+<target>t9</target>
+</dragger>
+
+
+<dragger>
+<text>Oblique ridge</text>
+<target>t10</target>
+</dragger>
+
+
+<dragger>
+<text>Hyoid bone</text>
+<target>t11</target>
+</dragger>
+
+
+
+
+
+</theDraggers>
+
+
+
+</activityData>
+
+<!--<span class="marker t0">::::marker identifies it as a dragger, t0 is its the target/column it is seeking-->

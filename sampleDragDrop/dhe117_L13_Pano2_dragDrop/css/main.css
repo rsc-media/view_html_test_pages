@@ -1,0 +1,460 @@
+ @charset "utf-8";
+
+/* CSS Document */
+/**
+* @author Claire Griese <clarie.griese@riosalado.edu>
+* @version 0.0.1
+* @since 2012-05-10
+* 
+
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+ v2.0 | 20110126
+ License: none (public domain)
+*/
+		
+
+html, body, div, applet, object, iframe,  h1, h2, h3, h4, h5, h6, pre,  a, abbr, acronym, address, big, cite, code,  del, dfn, img, ins, kbd, q, s, samp,  small, strike, sub, sup, tt, var,  b, u, i, center,  dl, dt, dd, p,  fieldset, form, label, legend,  table, caption, tbody, tfoot, thead, tr, th, td,  article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary,  time, mark, audio, video
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure,  footer, header, hgroup, menu, nav, section
+{
+	display: block;
+}
+
+body
+{
+	line-height: 1;
+}
+
+table
+{
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* 
+end reset
+*/
+
+
+body
+{
+	background-color: #f5f5f5;
+}
+
+#maindiv_all
+{
+	width: 900px;
+	height: 700px;
+	border: 1px solid #000;
+	margin: 0 auto;
+	background-color:  #ffffff;
+	background-image:url(../images/DHE117_HY_Lesson13pano2_edit1.jpg);
+	background-repeat:no-repeat;
+	background-position:center 95%;
+
+	cursor: default;
+	position:relative;
+
+
+}
+
+/*for IE, removes the outline css property applied when an a element is clicked*/
+a {
+   outline: 0;
+}
+
+/********************************************/
+
+
+#tophalf
+{
+	width: 900px;
+	height: 195px;
+	background-color: transparent;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#headerLabel
+{
+	height: 20px;
+	width: 785px;
+	margin-top: 5px;
+	margin-left: 15px;
+	background-color: transparent;
+}
+
+.header_text
+{
+	font-family: inherit;
+	font-weight: bold;
+	font-size: 1.2em;
+	color:#343940;
+}
+
+#directionLabel
+{
+	width: 870px;
+	height: 39px;
+	background-color: transparent;
+	margin-top: 4px;
+	margin-left: 15px;
+	margin-right:15px;
+}
+
+.direction_text
+{
+	font-family: inherit;
+	font-weight: normal;
+	font-size: .85em;
+	line-height:1.2;
+	color: #343940;
+}
+
+
+
+
+/********************************************/
+
+
+
+/********************************************/
+
+	
+
+#bottomhalf
+{
+	height: 500px;
+	width: 900px;
+	background-color: transparent;
+	
+}
+
+#dragHolder{
+
+	position:relative;
+	top:-70px;
+
+	margin:0 auto;
+
+	width:750px;
+	height:70px;
+
+	padding-top:8px;
+	padding-bottom:2px;
+
+	background-color:#cae3f1;
+	opacity:.8;
+
+	border:1px #498ecb solid;
+
+	/*won't work in IE8 or below*/
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+
+	z-index:2;
+}
+
+.dragger{
+
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:1em;
+	color:#121118;
+
+	font-weight:bold;
+
+	padding-top:3px;
+	padding-left:5px;
+	padding-right:5px;
+	padding-bottom:3px;
+
+	margin-left:6px;
+	margin-right:1px;
+
+	cursor:pointer;
+
+	opacity:0;
+
+	display:block;
+
+	float:left;
+
+	white-space: nowrap;
+
+
+}
+
+/*.spacer{
+
+	width:100%;
+	height:3px;
+}*/
+
+/*once dragging, this property will override mousedown
+(non-moving, original dragger)
+*/
+.startDrag
+{
+	color: #ee1b22;
+}
+
+/*to separate states of the clone from the ui.draggable, once the clone is in motion*/
+
+.startDragHelper
+{
+	color: #ee1b22;
+	
+}
+
+/*the state to show that ui.draggable is no longer usable*/
+
+.accepted
+{
+	color: #cae3f1;
+	cursor: text;
+}
+
+/*the state to show that ui.helper is no longer usable*/
+
+.acceptedHelper
+{
+	color: #000;
+}
+
+/*this is a default state when ui.draggable stops and is not accepted if on a droppable.
+Could be used to show that the dragger was 'visited' or used at least once
+*/
+.returned
+{
+	color: #121118;
+}
+
+/*for mousedown changes*/
+
+.doPress
+{
+	color: #ee1b22;
+}
+
+
+
+/**********************************************************/
+/*target fields*/
+
+.dragTarget{
+
+	position:absolute;
+
+	top:0;
+
+	left:400px;
+
+	height:18px;
+	width:150px;
+	background-color:#fff;
+	border:1px #000 solid;
+	display:block;
+
+	padding-top:3px;
+	padding-left:3px;
+
+
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:.90em;
+	color:#000;
+
+	opacity:.5;
+
+	/*won't work in IE8 or below*/
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+
+/*see .matched for completion style*/
+
+#t0{
+
+	top:392px;
+	left:284px;
+}
+
+#t1{
+
+	top:246px;
+	left:244px;		
+}
+
+#t2{
+
+	top:270px;
+	left:303px;		
+}
+
+#t3 {
+
+	top:254px;
+	left:650px;	
+}
+
+#t4{
+
+	top:565px;
+	left:140px;
+}
+
+#t5 {
+
+	top:503px;
+	left:28px;
+
+	height:31px;
+	width:120px;
+}
+
+#t6 {
+
+	top:366px;
+	left:63px;	
+}
+
+
+#t7 {
+
+	top:390px;
+	left:126px;
+	
+}
+
+#t8 {
+
+	top:330px;
+	left:24px;
+}
+
+
+#t9 {
+
+	top:345px;
+	left:663px;
+
+}
+
+
+#t10 {
+
+	top:385px;
+	left:750px;
+
+	height:31px;
+	width:100px;
+
+}
+
+
+#t11 {
+
+	top:490px;
+	left:711px;
+
+}
+
+
+#t12 {
+
+	top:619px;
+	left:226px;
+
+}
+
+
+
+
+.matched{
+
+	background-color:#fff;
+	border:1px #ee1b22 solid;
+}
+
+
+
+
+
+/********************************************/
+
+
+#feedback
+{
+	position:relative;
+	margin:0 auto;
+
+	display:none;
+
+	line-height:1.2;
+
+	
+	width: 700px;
+	height: 50px;
+	margin-top: 7px;
+	background-color: transparent;
+
+	text-align:center;
+
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.1em;
+	font-style:normal;
+	font-weight: bold;
+
+	color:#121118;
+
+	z-index:2;
+}
+
+
+
+
+.reset
+{
+	font-family:inherit;
+	font-size: inherit;
+	font-style:inherit;
+	font-weight:inherit;
+
+	cursor:pointer;
+}
+
+a.reset:link    {color:#498ecb; text-decoration:none;}
+a.reset:visited {color:#498ecb; text-decoration:none;;}
+a.reset:hover   {color:#121118; text-decoration:none;}
+a.reset:active  {color:#ee1b22; text-decoration:none;}
+
+

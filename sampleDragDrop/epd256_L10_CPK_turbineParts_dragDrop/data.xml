@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<activityData>
+<headerLabel><![CDATA[EPD256 L11 Check Prior Knowledge]]></headerLabel>
+<directionLabel><![CDATA[ Drag the components of a steam turbine to the appropriate locations.]]></directionLabel>
+
+<theDraggers>
+<dragger>
+<text>Coal</text>
+<target>t0</target>
+</dragger>
+<dragger>
+<text>Boiler</text>
+<target>t1</target>
+</dragger>
+<dragger>
+<text>Water</text>
+<target>t2</target>
+</dragger>
+<dragger>
+<text>Steam</text>
+<target>t3</target>
+</dragger>
+<dragger>
+<text>Steam Turbine</text>
+<target>t4</target>
+</dragger>
+<dragger>
+<text>Steam Exhaust</text>
+<target>t5</target>
+</dragger>
+
+<dragger>
+<text>Generator</text>
+<target>t6</target>
+</dragger>
+
+
+
+</theDraggers>
+
+
+
+</activityData>
+
+<!--<span class="marker t0">::::marker identifies it as a dragger, t0 is its the target/column it is seeking-->

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<activityData>
+<headerLabel><![CDATA[EPD256 L9 Check Prior Knowledge]]></headerLabel>
+<directionLabel><![CDATA[ Drag the basic house parts listed to their corresponding house parts pictured.]]></directionLabel>
+
+<theDraggers>
+<dragger>
+<text>Collar tie</text>
+<target>t0</target>
+</dragger>
+<dragger>
+<text>Roof rafter</text>
+<target>t1</target>
+</dragger>
+<dragger>
+<text>Ceiling joist</text>
+<target>t2</target>
+</dragger>
+<dragger>
+<text>Exterior wall</text>
+<target>t3</target>
+</dragger>
+<dragger>
+<text>Bearing wall</text>
+<target>t4</target>
+</dragger>
+<dragger>
+<text>Floor joist</text>
+<target>t5</target>
+</dragger>
+
+<dragger>
+<text>Bearing beam</text>
+<target>t6</target>
+</dragger>
+
+<dragger>
+<text>Column</text>
+<target>t7</target>
+</dragger>
+<dragger>
+<text>Foundation wall</text>
+<target>t8</target>
+</dragger>
+
+<dragger>
+<text>Footing</text>
+<target>t9</target>
+</dragger>
+
+
+
+</theDraggers>
+
+
+
+</activityData>
+
+<!--<span class="marker t0">::::marker identifies it as a dragger, t0 is its the target/column it is seeking-->

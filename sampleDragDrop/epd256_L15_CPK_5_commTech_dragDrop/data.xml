@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<activityData>
+<headerLabel><![CDATA[EPD256 L15 Check Prior Knowledge]]></headerLabel>
+<directionLabel><![CDATA[ Drag the online service icons to the category that best describes them.]]></directionLabel>
+
+<theDraggers>
+<dragger>
+<text><![CDATA[<img src="images/amazon.png" />]]></text>
+<target>t7</target>
+</dragger>
+<dragger>
+<text><![CDATA[<img src="images/dropbox.png" />]]></text>
+<target>t5</target>
+</dragger>
+<dragger>
+<text><![CDATA[<img src="images/facetime.png" />]]></text>
+<target>t4</target>
+</dragger>
+<dragger>
+<text><![CDATA[<img src="images/gmail.png" />]]></text>
+<target>t2</target>
+</dragger>
+<dragger>
+<text><![CDATA[<img src="images/google_calendar.png" />]]></text>
+<target>t1</target>
+</dragger>
+<dragger>
+<text><![CDATA[<img src="images/google_drive.png" />]]></text>
+<target>t5</target>
+</dragger>
+<dragger>
+<text><![CDATA[<img src="images/hotmail.png" />]]></text>
+<target>t2</target>
+</dragger>
+
+
+<dragger>
+<text><![CDATA[<img src="images/overstock.png" />]]></text>
+<target>t7</target>
+</dragger>
+<dragger>
+<text><![CDATA[<img src="images/skype.png" />]]></text>
+<target>t4</target>
+</dragger>
+
+<dragger>
+<text><![CDATA[<img src="images/tumblr.png" />]]></text>
+<target>t6</target>
+</dragger>
+
+<dragger>
+<text><![CDATA[<img src="images/twitter.png" />]]></text>
+<target>t3</target>
+</dragger>
+
+<dragger>
+<text><![CDATA[<img src="images/wikipedia.png" />]]></text>
+<target>t0</target>
+</dragger>
+
+<dragger>
+<text><![CDATA[<img src="images/wordpress.png" />]]></text>
+<target>t6</target>
+</dragger>
+
+<dragger>
+<text><![CDATA[<img src="images/text.png" />]]></text>
+<target>t8</target>
+</dragger>
+
+
+</theDraggers>
+
+
+
+</activityData>
+
+<!--<span class="marker t0">::::marker identifies it as a dragger, t0 is its the target/column it is seeking-->
